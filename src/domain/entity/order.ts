@@ -42,4 +42,20 @@ export default class Order {
     total(): number{
         return this._items.reduce((acc, item) => acc + item.price, 0);
     }
+
+    removeItem(id: string){
+        this._items = this._items.filter(item => item.id !== id);
+    }
+
+    addItem(item: OrderItem){
+        const itemIndex = this._items.findIndex(
+            _item => _item.productId == item.productId && _item.name == item.name
+        );
+
+        if(itemIndex !== -1){
+            throw new Error("Item alredy exist!");
+        }
+        
+        this._items.push(item)
+    }
 }

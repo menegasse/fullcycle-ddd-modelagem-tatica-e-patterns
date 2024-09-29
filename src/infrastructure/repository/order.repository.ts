@@ -22,7 +22,7 @@ export default class OrderRepository implements OrderRepositoryInterface{
             include: [{model: OrderItemModel}],
         });
     }
-
+    
     async find(id: string): Promise<Order> {
         let orderModel;
 
@@ -48,18 +48,34 @@ export default class OrderRepository implements OrderRepositoryInterface{
         );
     }
 
-    async findAll(customer: Customer): Promise<Order[]> {
-        let orderModel;
+    async update(entity: Order): Promise<void> {
+        const orderModel = await this.find(entity.id);
 
-        try{
-            orderModel = await OrderModel.findAll({
-                where: {customer_id: customer.id}, 
-                include: ["items"]
+        let itemsIds = entity.items.map(item => item.id);
+        const itemsToExclude = orderModel.items.filter(item => !itemsIds.includes(item.id));
+        if (itemsToExclude.length !== 0){
+            await OrderItemModel.destroy({
+                where:{id: itemsToExclude.map(item => item.id)}
             });
-        }catch(error){
-            throw new Error(`${customer.name} hasn't created any orders yet!`);
-            
-        }        
+        }
+        
+        itemsIds = orderModel.items.map(item => item.id);
+        const itemsToAdd = entity.items.filter(item => !itemsIds.includes(item.id));
+        if (itemsToAdd.length !== 0){
+            await OrderItemModel.bulkCreate(itemsToAdd.map((item) => ({
+                id: item.id,
+                name: item.name,
+                unitPrice: item.unitPrice,
+                quantity: item.quantity,
+                product_id: item.productId,
+                order_id: entity.id
+            })));
+        }
+        
+    }
+
+    async findAll(): Promise<Order[]> {
+        const orderModel = await OrderModel.findAll({include: ["items"]});
 
         return orderModel.map((order) => {
             return new Order(

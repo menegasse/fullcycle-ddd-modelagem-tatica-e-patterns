@@ -3,7 +3,7 @@ import ProductCreatedEvent from "../porduct/product-created.event";
 import EventDispatcher from "../shared/event-dispatcher";
 
 describe("Domain events tests", () => {
-    it("should register aan event handler", () => {
+    it("should register an event handler", () => {
         const eventDispatcher = new EventDispatcher();
         const eventHandler = new SendEmailWhenProductIsCreatedHandler();
 
@@ -29,7 +29,7 @@ describe("Domain events tests", () => {
         
     });
 
-    it("should unregister an event handler", () => {
+    it("should unregister all event handler", () => {
         const eventDispatcher = new EventDispatcher();
         const eventHandler = new SendEmailWhenProductIsCreatedHandler();
 

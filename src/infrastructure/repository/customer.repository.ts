@@ -51,12 +51,13 @@ export default class CustomerRepository implements CustomerRepositoryInterface{
         
         const customer = new Customer(customerModel.id, customerModel.name);
         customer.addRewardPoints(customerModel.rewardPoints);
-        customer.address = new Address(
+        const address = new Address(
             customerModel.street,
             customerModel.number,
             customerModel.zipcode,
             customerModel.city
         );
+        customer.changeAddress(address);
 
         if (customerModel.active){
             customer.activate()
@@ -71,12 +72,13 @@ export default class CustomerRepository implements CustomerRepositoryInterface{
         return customerModels.map((customerModel) => {
                 const customer = new Customer(customerModel.id, customerModel.name);
                 customer.addRewardPoints(customerModel.rewardPoints);
-                customer.address = new Address(
+                const address = new Address(
                     customerModel.street,
                     customerModel.number,
                     customerModel.zipcode,
                     customerModel.city
                 );
+                customer.changeAddress(address);
                 
                 if (customerModel.active){
                     customer.activate()

@@ -34,7 +34,8 @@ describe("Order repository test", () => {
     it("should create a new order", async() => {
         const customerRepository = new CustomerRepository();
         const customer = new Customer("123", "Customer 1");
-        customer.address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        const address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        customer.changeAddress(address);
         await customerRepository.create(customer);
 
         const productRepository = new ProductRepository();
@@ -71,7 +72,8 @@ describe("Order repository test", () => {
     it("should update a order", async() => {
         const customerRepository = new CustomerRepository();
         const customer = new Customer("123", "Customer 1");
-        customer.address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        const address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        customer.changeAddress(address);
         await customerRepository.create(customer);
 
         const productRepository = new ProductRepository();
@@ -136,7 +138,8 @@ describe("Order repository test", () => {
     it("should find an order", async() => {
         const customerRepository = new CustomerRepository();
         const customer = new Customer("123", "Customer 1");
-        customer.address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        const address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        customer.changeAddress(address);
         await customerRepository.create(customer);
 
         const productRepository = new ProductRepository();
@@ -172,7 +175,8 @@ describe("Order repository test", () => {
     it("should find all orders", async() => {
         const customerRepository = new CustomerRepository();
         const customer = new Customer("123", "Customer 1");
-        customer.address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        const address = new Address("Street 1", 1, "Zipecode 1", "City 1");
+        customer.changeAddress(address);
         await customerRepository.create(customer);
 
         const productRepository = new ProductRepository();

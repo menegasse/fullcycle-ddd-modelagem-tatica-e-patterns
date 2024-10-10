@@ -1,4 +1,3 @@
-import CustomerModel from "../../infrastructure/db/sequelize/model/customer.model"
 import CustomerRepository from "../../infrastructure/repository/customer.repository"
 import Customer from "../entity/customer"
 import Address from "../entity/value_object/address"
@@ -29,6 +28,6 @@ export default class CustomerService{
 
         const eventDispatcher = new EventDispatcher();
         eventDispatcher.register("AddressUpdateEvent", new EnviaConsoleLogHandler());
-        eventDispatcher.notify(new AddressUpdateEvent(customer.id, customer.name, customer.address));
+        eventDispatcher.notify(new AddressUpdateEvent(customer, address));
     }
 }

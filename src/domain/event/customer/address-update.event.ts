@@ -1,3 +1,4 @@
+import Customer from "../../entity/customer";
 import Address from "../../entity/value_object/address";
 import EventInterface from "../shared/event.interface";
 
@@ -5,11 +6,13 @@ export default class AddressUpdateEvent implements EventInterface{
     dataTimeOccured: Date;
     eventData: any;
 
-    constructor(customerId: string, customerName:string, address: Address){
+    constructor(customer: Customer, address: Address){
         this.dataTimeOccured = new Date();
+
+        const {id, name} = customer;
         this.eventData = {
-            customerId,
-            customerName,
+            id,
+            name,
             address
         };
     }
